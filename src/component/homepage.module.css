@@ -1,0 +1,20 @@
+.bluebackgroundheading{
+    background: rgba(42, 167, 255, 1);
+    color: white;
+    font-size: 15px;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    
+}
+@media (max-width: 861px) {
+  .bluebackgroundheading {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+}
+
+

@@ -1,0 +1,12 @@
+.swiper {
+  width: 100%;
+}
+
+.swiper-slide {
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide-active {
+  transform: scale(1.05);
+}
+
