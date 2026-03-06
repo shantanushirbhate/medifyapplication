@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
+import { Select, MenuItem, FormControl } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/medifylogo.png.png";
 import heroHeadline from "../assets/tag_heroheadling.png";
@@ -23,7 +25,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import CloseIcon from "@mui/icons-material/Close";
+import { InputAdornment } from "@mui/material";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -35,6 +40,7 @@ import PatientCaring from "./paitentcaring";
 import LatestNes from "./latestnews";
 import OurFamilyes from "./ourfamilys";
 import Questions from "./questions";
+import DownloadApp from "./dowenloadapp";
 
 const drawerWidth = 200;
 
@@ -149,197 +155,266 @@ const NavigationBar = ({ isMobile, onMenuClick }) => (
   </AppBar>
 );
 
-const HeroSection = () => (
-  <>
-    <Box
-      sx={{
-        position: "relative",
-        backgroundColor: "#E7F0FF",
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        px: { xs: 2, sm: 4, md: 31 },
-        py: { xs: 2, md: 0 },
-        gap: { xs: 2, md: 6 },
-        flexWrap: { xs: "wrap", md: "nowrap" },
-      }}
-    >
-      {/* LEFT SECTION */}
+const HeroSection = ({ states }) => {
+  const [selectedState, setSelectedState] = useState("");
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!selectedState) {
+      return;
+    }
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get(
+          `https://meddata-backend.onrender.com/cities/${selectedState}`,
+        );
+
+        setCities(response.data);
+      } catch (error) {
+        console.log("error in fetching cities:", error);
+      }
+    };
+    fetchCities();
+  }, [selectedState]);
+
+  return (
+    <>
       <Box
         sx={{
-          flex: 1,
-          minWidth: { xs: "100%", md: "50%" },
+          position: "relative",
+          backgroundColor: "#E7F0FF",
           display: "flex",
-          flexDirection: "column",
-          alignItems: { xs: "center", md: "flex-start" },
-          textAlign: { xs: "center", md: "left" },
-          gap: 3,
-          marginLeft: { xs: "20px", md: "15%" },
-          height: { md: "450px" },
-        }}
-      >
-        {/* HERO HEADING */}
-        <img
-          src={heroHeadline}
-          alt="Medify Headline"
-          style={{
-            width: "100%",
-            maxWidth: "560px",
-          }}
-        />
-
-        {/* FIND CENTERS BUTTON */}
-        <Button
-          sx={{ marginLeft: { xs: "-175px", sm: "100px", md: "-2px" } }}
-          variant="contained"
-          size="small"
-        >
-          Find Centers
-        </Button>
-      </Box>
-
-      {/* RIGHT SECTION */}
-      <Box
-        sx={{
-          flex: 1,
-          minWidth: { xs: "100%", md: "50%" },
-          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
           justifyContent: "center",
+          px: { xs: 2, sm: 4, md: 31 },
+          py: { xs: 2, md: 0 },
+          gap: { xs: 2, md: 6 },
+          flexWrap: { xs: "wrap", md: "nowrap" },
         }}
       >
-        <img
-          src={heroMaskGroupImg}
-          alt="Medify Doctors"
-          style={{
-            width: "100%",
-            maxWidth: "520px",
-            height: "auto",
-          }}
-        />
-      </Box>
-      {/* search city state box container */}
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: { xs: "-260px", sm: "-200px", md: "-140px" },
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: { xs: "95%", sm: "85%", md: "65%" },
-          backgroundColor: "#FFFFFF",
-          boxShadow: 3,
-          borderRadius: 3,
-          p: { xs: 2, sm: 3, md: 4 },
-          zIndex: 1,
-        }}
-      >
-        {/* Search Section */}
+        {/* LEFT SECTION */}
         <Box
           sx={{
+            flex: 1,
+            minWidth: { xs: "100%", md: "50%" },
             display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            gap: 2,
-            mb: 3,
+            flexDirection: "column",
+            alignItems: { xs: "center", md: "flex-start" },
+            textAlign: { xs: "center", md: "left" },
+            gap: 3,
+            marginLeft: { xs: "20px", md: "15%" },
+            height: { md: "450px" },
           }}
         >
-          <input
-            placeholder="Search State"
+          {/* HERO HEADING */}
+          <img
+            src={heroHeadline}
+            alt="Medify Headline"
             style={{
-              flex: 1,
-              padding: "10px",
-              borderRadius: "6px",
-              border: "1px solid #ccc",
+              width: "100%",
+              maxWidth: "560px",
             }}
           />
 
-          <input
-            placeholder="Search City"
-            style={{
-              flex: 1,
-              padding: "10px",
-              borderRadius: "6px",
-              border: "1px solid #ccc",
-            }}
-          />
-
+          {/* FIND CENTERS BUTTON */}
           <Button
+            sx={{ marginLeft: { xs: "-175px", sm: "100px", md: "-2px" } }}
             variant="contained"
-            sx={{
-              width: { xs: "100%", sm: "auto" },
-            }}
+            size="small"
           >
-            Search
+            Find Centers
           </Button>
         </Box>
 
-        {/* Heading */}
-        <Box sx={{ textAlign: "center", mb: 3 }}>
-          <Typography variant="h6" fontWeight={600}>
-            You May Be Looking For
-          </Typography>
-        </Box>
-
-        {/* Image Grid */}
+        {/* RIGHT SECTION */}
         <Box
           sx={{
+            flex: 1,
+            minWidth: { xs: "100%", md: "50%" },
             display: "flex",
-            flexWrap: "wrap",
-            gap: 3,
-            justifyContent: {
-              xs: "center",
-              sm: "space-between",
-            },
+            justifyContent: "center",
           }}
         >
-          {Images.map((item) => (
-            <Box
-              key={item.id}
+          <img
+            src={heroMaskGroupImg}
+            alt="Medify Doctors"
+            style={{
+              width: "100%",
+              maxWidth: "520px",
+              height: "auto",
+            }}
+          />
+        </Box>
+        {/* search city state box container */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: { xs: "-260px", sm: "-200px", md: "-140px" },
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: { xs: "95%", sm: "85%", md: "65%" },
+            backgroundColor: "#FFFFFF",
+            boxShadow: 3,
+            borderRadius: 3,
+            p: { xs: 2, sm: 3, md: 4 },
+            zIndex: 1,
+          }}
+        >
+          {/* Search Section */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              justifyContent: "center",
+              gap: 2,
+              mb: 3,
+            }}
+          >
+            <Box id="state">
+              <FormControl fullWidth>
+                <Select
+                  value={selectedState}
+                  // disabled={!selectedState}
+               onChange={(e) => {
+  const newState = e.target.value;
+  setSelectedState(newState);
+  setSelectedCity("");
+}}
+                  displayEmpty
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <LocationOnOutlinedIcon />
+                    </InputAdornment>
+                  }
+                >
+                  <MenuItem value="">
+                    <em>Select State</em>
+                  </MenuItem>
+                  {states.map((item, index) => (
+                    <MenuItem key={index} value={item}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+
+            <Box>
+              <FormControl fullWidth>
+                <Select
+                  value={selectedCity}
+                  onChange={(e) => setSelectedCity(e.target.value)}
+                  displayEmpty
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <LocationOnOutlinedIcon/>
+                    </InputAdornment>
+                  }
+                >
+                  <MenuItem value="">Select Cities</MenuItem>
+                  {Array.isArray(cities) &&
+                    cities.map((item, index) => (
+                      <MenuItem key={index} value={item}>
+                        {item}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Box>
+
+            <Button
+              variant="contained"
+                disabled={!selectedState || !selectedCity}
+              onClick={() =>
+                navigate("/search", {
+                  state: {
+                    selectedState,
+                    selectedCity,
+                  },
+                })
+              }
               sx={{
-                width: {
-                  xs: "14%", // 2 per row mobile
-                  sm: "28%", // 3 per row tablet
-                  md: "15%", // 5 per row desktop
-                },
-                textAlign: "center",
-                p: { xs: 1.6, sm: 2 },
-                borderRadius: 2,
-                transition: "0.3s",
-                cursor: "pointer",
-                "&:hover": {
-                  boxShadow: 3,
-                  transform: "translateY(-5px)",
-                },
+                width: { xs: "100%", sm: "auto" },
               }}
             >
+              <SearchOutlinedIcon  sx={{ mr: 1 }} />
+              Search
+            </Button>
+          </Box>
+
+          {/* Heading */}
+          <Box sx={{ textAlign: "center", mb: 3 }}>
+            <Typography variant="h6" fontWeight={600}>
+              You May Be Looking For
+            </Typography>
+          </Box>
+
+          {/* Image Grid */}
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 3,
+              justifyContent: {
+                xs: "center",
+                sm: "space-between",
+              },
+            }}
+          >
+            {Images.map((item) => (
               <Box
-                component="img"
-                src={item.src}
-                alt={item.title}
+                key={item.id}
                 sx={{
                   width: {
-                    xs: "50px",
-                    sm: "60px",
-                    md: "80px",
+                    xs: "14%", // 2 per row mobile
+                    sm: "28%", // 3 per row tablet
+                    md: "15%", // 5 per row desktop
                   },
-                  height: "auto",
-                  mb: 1,
+                  textAlign: "center",
+                  p: { xs: 1.6, sm: 2 },
+                  borderRadius: 2,
+                  transition: "0.3s",
+                  cursor: "pointer",
+                  "&:hover": {
+                    boxShadow: 3,
+                    transform: "translateY(-5px)",
+                  },
                 }}
-              />
-              <Typography variant="body2">{item.title}</Typography>
-            </Box>
-          ))}
+              >
+                <Box
+                  component="img"
+                  src={item.src}
+                  alt={item.title}
+                  sx={{
+                    width: {
+                      xs: "50px",
+                      sm: "60px",
+                      md: "80px",
+                    },
+                    height: "auto",
+                    mb: 1,
+                  }}
+                />
+                <Typography variant="body2">{item.title}</Typography>
+              </Box>
+            ))}
+          </Box>
         </Box>
       </Box>
-    </Box>
-  </>
-);
+    </>
+  );
+};
 
 /* =======================
    Home Component
 ======================= */
 function Home(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const isMobile = useMediaQuery("(max-width:861px)");
 
@@ -350,6 +425,22 @@ function Home(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  const [state, setState] = useState([]);
+
+  useEffect(() => {
+    const fetchState = async () => {
+      try {
+        const response = await axios.get(
+          "https://meddata-backend.onrender.com/states",
+        );
+        setState(response.data);
+      } catch (error) {
+        console.log("error in fetching state:", error);
+      }
+    };
+    fetchState();
+  }, []);
+
   return (
     <>
       <CssBaseline />
@@ -359,7 +450,7 @@ function Home(props) {
       <NavigationBar isMobile={isMobile} onMenuClick={handleDrawerToggle} />
 
       {/* Headline BELOW AppBar */}
-      <HeroSection />
+      <HeroSection states={state} />
 
       <Drawer
         anchor="right"
@@ -392,7 +483,8 @@ function Home(props) {
       <PatientCaring />
       <LatestNes />
       <OurFamilyes />
-      <Questions/>
+      <Questions />
+      <DownloadApp />
     </>
   );
 }
