@@ -226,7 +226,7 @@ const SearchListContainer = (
 const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
 
   return (
-    <Box mt={30} px={3}>
+    <Box sx={{mt:{xs:"250px", sm:"150px", md:"100px"}}}>
 
       <Typography variant="h5" fontWeight="bold">
         {medical.length} Medical Centers Available in {selectedCity}
