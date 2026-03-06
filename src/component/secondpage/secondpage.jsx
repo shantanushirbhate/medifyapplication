@@ -1,9 +1,9 @@
-import  { React, useState,useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../secondpage/secondpage.module.css";
 import PropTypes from "prop-types";
-import { FormControl, Select, InputAdornment, MenuItem } from "@mui/material";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import SearchOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import { FormControl, Select, MenuItem } from "@mui/material";
+// import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import logo from "../../assets/medifylogo.png.png";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -121,7 +121,18 @@ const NavigationBar = ({ isMobile, onMenuClick }) => (
   </AppBar>
 );
 
-const SearchListContainer = () => {
+const SearchListContainer = (
+  {
+    selectedState,
+  setSelectedState,
+  selectedCity,
+  setSelectedCity,
+  states,
+    cities,
+  onSearch
+}
+
+) => {
   return (
     <>
       <Box
@@ -159,67 +170,44 @@ const SearchListContainer = () => {
           >
             <Box id="state">
               <FormControl fullWidth>
-                <Select
-                  // value={selectedState}
-                  // disabled={!selectedState}
-                  // onChange={(e) => {
-                  //   const newState = e.target.value;
-                  //   setSelectedState(newState);
-                  //   setSelectedCities("");
-                  //   setCities([]);
-                  // }}
-                  displayEmpty
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LocationOnOutlinedIcon />
-                    </InputAdornment>
-                  }
-                >
-                  <MenuItem value="">
-                    <em>Select State</em>
-                  </MenuItem>
-                  {/* {states.map((item, index) => (
-                    <MenuItem key={index} value={item}>
-                      {item}
-                    </MenuItem>
-                  ))} */}
-                </Select>
+            <Select
+  value={selectedState}
+  onChange={(e) => setSelectedState(e.target.value)}
+  displayEmpty
+>
+  <MenuItem value="">
+    <em>Select State</em>
+  </MenuItem>
+
+  {states.map((item, index) => (
+    <MenuItem key={index} value={item}>
+      {item}
+    </MenuItem>
+  ))}
+</Select>
               </FormControl>
             </Box>
 
             <Box>
               <FormControl fullWidth>
-                <Select
-                  // value={selectCities}
-                  // onChange={(e) => setSelectedCities(e.target.value)}
-                  // displayEmpty
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LocationOnOutlinedIcon />
-                    </InputAdornment>
-                  }
-                >
-                  <MenuItem value="">Select Cities</MenuItem>
-                  {/* {Array.isArray(cities) &&
-                    cities.map((item, index) => (
-                      <MenuItem key={index} value={item}>
-                        {item}
-                      </MenuItem>
-                    ))} */}
-                </Select>
+              <Select
+  value={selectedCity}
+  onChange={(e) => setSelectedCity(e.target.value)}
+>
+  <MenuItem value="">Select City</MenuItem>
+
+  {cities.map((item, index) => (
+    <MenuItem key={index} value={item}>
+      {item}
+    </MenuItem>
+  ))}
+</Select>
               </FormControl>
             </Box>
 
             <Button
               variant="contained"
-              // onClick={() =>
-              //   navigate("/search", {
-              //     state: {
-              //       selectedState,
-              //       selectCities,
-              //     },
-              //   })
-              // }
+              onClick={onSearch}
               sx={{
                 width: { xs: "100%", sm: "auto" },
               }}
@@ -235,46 +223,10 @@ const SearchListContainer = () => {
 };
 
 
-const HospitalListCard = () => {
-
-  const location = useLocation();
-  const { selectedState, selectedCity } = location.state || {};
-
-  const [medical, setMedical] = useState([]);
-
-  useEffect(() => {
-
-    const fetchMedicalCenter = async () => {
-      try {
-
-        const response = await axios.get(
-          `https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`
-        );
-
-        const hospitals = response.data.map((item) => ({
-          name: item["Hospital Name"],
-          address: item["Address"],
-          city: item["City"],
-          zip: item["ZIP Code"],
-          state: item["State"],
-          rating: item["Hospital overall rating"]
-        }));
-
-        setMedical(hospitals);
-
-      } catch (error) {
-        console.log("error in fetching the medical center:", error);
-      }
-    };
-
-    if (selectedState && selectedCity) {
-      fetchMedicalCenter();
-    }
-
-  }, [selectedState, selectedCity]);
+const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
 
   return (
-    <Box mt={10} px={3}>
+    <Box mt={30} px={3}>
 
       <Typography variant="h5" fontWeight="bold">
         {medical.length} Medical Centers Available in {selectedCity}
@@ -309,10 +261,7 @@ const HospitalListCard = () => {
                 Rating: {hospital.rating || "Not Available"}
               </Typography>
 
-              <Button
-                variant="contained"
-                sx={{ mt: 2 }}
-              >
+              <Button variant="contained" sx={{ mt: 2 }}>
                 Book FREE Center Visit
               </Button>
 
@@ -332,10 +281,112 @@ const HospitalListCard = () => {
 
 /* ======================= Main Component ======================= */
 export default function SearchListPage(props) {
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  
+  const location = useLocation();
+
+  const [selectedState, SetSelectedState] = useState(
+    location.state?.selectedState || ""
+  );
+
+  const [selectedCity, SetSelectedCity] = useState(
+    location.state?.selectedCity || ""
+  );
+
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [medical, setMedical] = useState([]);
+
+  /* ================= FETCH HOSPITALS ================= */
+
+  const fetchMedicalCenter = async () => {
+
+    if (!selectedState || !selectedCity) return;
+
+    try {
+
+      const response = await axios.get(
+        `https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`
+      );
+
+      const hospitals = response.data.map((item) => ({
+        name: item["Hospital Name"],
+        address: item["Address"],
+        city: item["City"],
+        zip: item["ZIP Code"],
+        state: item["State"],
+        rating: item["Hospital overall rating"]
+      }));
+
+      setMedical(hospitals);
+
+    } catch (error) {
+      console.log("error in fetching the medical center:", error);
+    }
+
+  };
+
+  /* ================= FIRST LOAD DATA ================= */
+
+  useEffect(() => {
+    if (selectedState && selectedCity) {
+      fetchMedicalCenter();
+    }
+  }, []);
+
+  /* ================= FETCH STATES ================= */
+
+  useEffect(() => {
+
+    const fetchStates = async () => {
+
+      try {
+
+        const response = await axios.get(
+          "https://meddata-backend.onrender.com/states"
+        );
+
+        setStates(response.data);
+
+      } catch (error) {
+        console.log("Error fetching states", error);
+      }
+
+    };
+
+    fetchStates();
+
+  }, []);
+
+  /* ================= FETCH CITIES ================= */
+
+  useEffect(() => {
+
+    const fetchCities = async () => {
+
+      try {
+
+        const response = await axios.get(
+          `https://meddata-backend.onrender.com/cities/${selectedState}`
+        );
+
+        setCities(response.data);
+
+      } catch (error) {
+        console.log("Error fetching cities", error);
+      }
+
+    };
+
+    if (selectedState) {
+      fetchCities();
+    }
+
+  }, [selectedState]);
+
+  /* ================= MOBILE MENU ================= */
 
   const isMobile = useMediaQuery("(max-width:861px)");
 
@@ -346,11 +397,18 @@ export default function SearchListPage(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  /* ================= RETURN ================= */
+
   return (
+
     <>
+
       <TopBanner />
 
-      <NavigationBar isMobile={isMobile} onMenuClick={handleDrawerToggle} />
+      <NavigationBar
+        isMobile={isMobile}
+        onMenuClick={handleDrawerToggle}
+      />
 
       <Drawer
         anchor="right"
@@ -367,10 +425,27 @@ export default function SearchListPage(props) {
       >
         <MobileDrawerContent onClose={handleDrawerToggle} />
       </Drawer>
-      <SearchListContainer />
-      <HospitalListCard/>
+
+      <SearchListContainer
+        selectedState={selectedState}
+        setSelectedState={SetSelectedState}
+        selectedCity={selectedCity}
+        setSelectedCity={SetSelectedCity}
+        states={states}
+        cities={cities}
+        onSearch={fetchMedicalCenter}
+      />
+
+      <HospitalListCard
+        selectedState={selectedState}
+        selectedCity={selectedCity}
+        medical={medical}
+      />
+
     </>
+
   );
+
 }
 
 SearchListPage.propTypes = {
