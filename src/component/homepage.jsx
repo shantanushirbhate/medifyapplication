@@ -65,6 +65,7 @@ const Images = [
    Top Banner
 ======================= */
 const TopBanner = () => (
+  
   <p className={styles.bluebackgroundheading}>
     The health and well-being of our patients and their health care team will
     always be our priority, so we follow the best practices for cleanliness.
@@ -100,7 +101,7 @@ const MobileDrawerContent = ({ onClose }) => (
     </List>
 
     <Box sx={{ p: 2 }}>
-      <Button variant="contained" fullWidth>
+      <Button variant="contained" fullWidth >
         My Booking
       </Button>
     </Box>
