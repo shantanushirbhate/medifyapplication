@@ -291,7 +291,7 @@ const HeroSection = ({ states }) => {
               mb: 3,
             }}
           >
-            <Box id="state">
+            <Box component="div" id="state">
               <FormControl fullWidth>
                 <Select
                   value={selectedState}
@@ -320,9 +320,10 @@ const HeroSection = ({ states }) => {
               </FormControl>
             </Box>
 
-            <Box  id="city" >
+            <Box component="div" id="city" >
               <FormControl fullWidth>
                 <Select
+                   disabled={!selectedState}  
                   value={selectedCity}
                   onChange={(e) => setSelectedCity(e.target.value)}
                   displayEmpty
