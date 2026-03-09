@@ -264,7 +264,7 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
             {/* Hospital Details */}
             <CardContent sx={{ flex: 1 }}>
               <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
-                {booking.hospitalName}
+                {booking?.hospitalName?.toLowerCase()}
               </Typography>
 
               <Typography sx={{ mt: 1 }}>
@@ -304,19 +304,28 @@ export default function MyBookings(props) {
   };
 
 
-  useEffect(() => {
-    const storedBookings =
-      JSON.parse(localStorage.getItem("bookings")) || [];
+useEffect(() => {
+  try {
+    const storedBookings = JSON.parse(localStorage.getItem("bookings"));
 
-    setBookings(storedBookings);
-  }, []);
+    if (Array.isArray(storedBookings)) {
+      setBookings(storedBookings);
+    } else {
+      setBookings([]);
+    }
+  } catch (error) {
+    console.log(" Error parsing bookings from localstorage:",error)
+    setBookings([]);
+  }
+}, []);
 
   
-   const filteredBookings = bookings.filter((booking) =>
-    booking.hospitalName
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+const filteredBookings = (bookings || []).filter((booking) => {
+  const hospitalName = booking?.hospitalName || "";
+  const searchTerm = search || "";
+
+  return hospitalName.toLowerCase().includes(searchTerm.toLowerCase());
+});
 
   const handleDeleteBooking = (indexToDelete) => {
 
