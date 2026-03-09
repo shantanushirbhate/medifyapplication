@@ -168,6 +168,7 @@ const SearchHospital = ({ searchInput, setSearchInput, onSearch }) => {
     >
       <Typography
         variant="h4"
+        component="h1"
         sx={{
           color: "#fff",
           fontWeight: 600,
@@ -262,7 +263,7 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
 
             {/* Hospital Details */}
             <CardContent sx={{ flex: 1 }}>
-              <Typography variant="h6" sx={{ fontWeight: 600 }}>
+              <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
                 {booking.hospitalName}
               </Typography>
 
