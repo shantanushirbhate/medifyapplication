@@ -698,7 +698,7 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
       <DialogTitle>Confirm Booking</DialogTitle>
 
         <DialogContent>
-                    <Typography variant="h6" component="h3">
+                    <Typography>
 Hospital: {selectedHospital?.name}
 </Typography>
 
