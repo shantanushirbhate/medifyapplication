@@ -190,12 +190,12 @@ const SearchListContainer = ({
       >
         <Box
           sx={{
-            marginBottom: { xs: "45rem", sm: "50rem", md: "39rem" },
-            position: "absolute",
-            bottom: { xs: "-260px", sm: "-200px", md: "-140px" },
+            marginBottom: { xs: "34rem", sm: "50rem", md: "39rem" },
+            position: "relative",
+            bottom: { xs: "-26px", sm: "-14px", md: "-14px" },
             left: "50%",
             transform: "translateX(-50%)",
-            width: { xs: "95%", sm: "85%", md: "65%" },
+            width: { xs: "85%", sm: "85%", md: "65%" },
             backgroundColor: "#FFFFFF",
             boxShadow: 3,
             borderRadius: 3,
@@ -250,6 +250,8 @@ const SearchListContainer = ({
             </Box>
 
             <Button
+              id="searchBtn"
+               type="submit"
               variant="contained"
               onClick={onSearch}
               sx={{

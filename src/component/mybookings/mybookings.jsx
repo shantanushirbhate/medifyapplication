@@ -172,7 +172,7 @@ const SearchHospital = ({ searchInput, setSearchInput, onSearch }) => {
           color: "#fff",
           fontWeight: 600,
           textAlign: { xs: "center", md: "left" },
-          mb: 3
+          mb: 1
         }}
       >
         My Bookings
@@ -180,7 +180,7 @@ const SearchHospital = ({ searchInput, setSearchInput, onSearch }) => {
 
       <Box
         sx={{
-          width: { xs: "100%", sm: "90%", md: "70%" },
+          width: { xs: "85%", sm: "90%", md: "70%" },
           mx: "auto",
           backgroundColor: "#fff",
           boxShadow: 3,
@@ -199,6 +199,8 @@ const SearchHospital = ({ searchInput, setSearchInput, onSearch }) => {
         />
 
         <Button
+          id="searchBtn"
+           type="submit"
           variant="contained"
           onClick={onSearch}
           sx={{
@@ -232,19 +234,26 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
           >
             {/* Responsive Hospital Image */}
             <CardMedia
+              
               component="img"
               image={Hospitalimage}
               alt="hospital"
               sx={{
+                marginLeft: {
+                  xs: "0.7rem",
+                  sm: "0rem",
+                  md:"0rem"// mobile full width
+                 
+                },
                 width: {
-                  xs: "100%",   // mobile full width
-                  sm: 160,      // tablet
-                  md: 200       // desktop
+                  xs: "40%",   // mobile full width
+                  sm: "40%",      // tablet
+                  md: "10%"       // desktop
                 },
                 height: {
-                  xs: 180,
-                  sm: 140,
-                  md: 160
+                  xs: "40%",
+                  sm: "40%",
+                  md: "10%"
                 },
                 borderRadius: 2,
                 objectFit: "cover"

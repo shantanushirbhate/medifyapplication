@@ -75,8 +75,11 @@ const TopBanner = () => (
 /* =======================
    Mobile Drawer Content
 ======================= */
-const MobileDrawerContent = ({ onClose }) => (
-  <Box
+const MobileDrawerContent = ({ onClose }) => {
+  const navigate = useNavigate()
+  return (
+    <>
+ <Box
     sx={{
       height: "100%",
       display: "flex",
@@ -101,18 +104,26 @@ const MobileDrawerContent = ({ onClose }) => (
     </List>
 
     <Box sx={{ p: 2 }}>
-      <Button variant="contained" fullWidth >
+      <Button variant="contained" fullWidth
+          onClick={ ()=> navigate("/my-bookings")} 
+      >
         My Booking
       </Button>
     </Box>
   </Box>
-);
+    </>
+  )
+ 
+};
 
 /* =======================
    Navigation Bar
 ======================= */
-const NavigationBar = ({ isMobile, onMenuClick }) => (
-  <AppBar
+const NavigationBar = ({ isMobile, onMenuClick }) => {
+  const navigate = useNavigate()
+  return (
+    <>
+<AppBar
     position="sticky"
     sx={{
       backgroundColor: "#E7F0FF",
@@ -141,7 +152,9 @@ const NavigationBar = ({ isMobile, onMenuClick }) => (
               {item}
             </Button>
           ))}
-          <Button variant="contained" sx={{ ml: 2 }}>
+          <Button variant="contained" sx={{ ml: 2 }}
+          onClick={ ()=> navigate("/my-bookings")} 
+          >
             My Booking
           </Button>
         </Box>
@@ -154,7 +167,10 @@ const NavigationBar = ({ isMobile, onMenuClick }) => (
       )}
     </Toolbar>
   </AppBar>
-);
+    </>
+  )
+  
+};
 
 const HeroSection = ({ states }) => {
   const [selectedState, setSelectedState] = useState("");
@@ -304,7 +320,7 @@ const HeroSection = ({ states }) => {
               </FormControl>
             </Box>
 
-            <Box>
+            <Box  id="city" >
               <FormControl fullWidth>
                 <Select
                   value={selectedCity}
@@ -328,6 +344,8 @@ const HeroSection = ({ states }) => {
             </Box>
 
             <Button
+              id="searchBtn"
+               type="submit"
               variant="contained"
                 disabled={!selectedState || !selectedCity}
               onClick={() =>
