@@ -289,7 +289,7 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
   };
   const handleConfirmBooking = () => {
     const booking = {
-       hospitalName: selectedHospital?.name,
+       hospitalName: selectedHospital.name,
     city: selectedHospital.city,
       date: days[selectedDateIndex],
       slot: selectedSlot,
@@ -699,7 +699,7 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
 
         <DialogContent>
                     <Typography variant="h6" component="h3">
-Hospital: {selectedHospital?.name?.toLowerCase()}
+Hospital: {selectedHospital?.name}
 </Typography>
 
 <Typography>
