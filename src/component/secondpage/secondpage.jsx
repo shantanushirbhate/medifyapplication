@@ -385,9 +385,9 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
 
   return (
     <Box sx={{ mt: { xs: "250px", sm: "150px", md: "100px" } }}>
-      <Typography variant="h4" component="h1" fontWeight="bold">
-        {medical.length} Medical Centers Available in {selectedCity}
-      </Typography>
+     <Typography variant="h4" component="h1" fontWeight="bold">
+  {`${medical.length} medical centers available in ${selectedCity?.toLowerCase()}`}
+</Typography>
 
       <Typography sx={{ mb: 3 }}>
         <VerifiedRoundedIcon sx={{ mr: 1 }} />
