@@ -312,11 +312,11 @@ export default function MyBookings(props) {
   }, []);
 
   
-   const filteredBookings = bookings.filter((booking) =>
-    booking.hospitalName
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+const filteredBookings = bookings.filter((booking) =>
+  (booking?.hospitalName || "")
+    .toLowerCase()
+    .includes((search || "").toLowerCase())
+);
 
   const handleDeleteBooking = (indexToDelete) => {
 
