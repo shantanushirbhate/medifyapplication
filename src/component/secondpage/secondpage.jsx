@@ -251,7 +251,7 @@ const SearchListContainer = ({
 
             <Button
               id="searchBtn"
-              type="submit"
+               type="submit"
               variant="contained"
               onClick={onSearch}
               sx={{
@@ -278,7 +278,7 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
   const [openModal, setOpenModal] = useState(false);
   const [email, setEmail] = useState("");
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleBooking = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -289,9 +289,8 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
   };
   const handleConfirmBooking = () => {
     const booking = {
-      hospitalName: selectedHospital?.name,
-      city: selectedHospital?.city,
-      state: selectedHospital?.state,
+       hospitalName: selectedHospital?.name,
+    city: selectedHospital.city,
       date: days[selectedDateIndex],
       slot: selectedSlot,
       email: email,
@@ -299,16 +298,15 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
 
     const existingBookings = JSON.parse(localStorage.getItem("bookings")) || [];
 
-    const updatedBookings = [...existingBookings, booking];
+    existingBookings.push(booking);
 
-    localStorage.setItem("bookings", JSON.stringify(updatedBookings));
+    localStorage.setItem("bookings", JSON.stringify(existingBookings));
 
     setOpenModal(false);
     setEmail("");
     setSelectedSlot(null);
     setSelectedHospital(null);
-
-    navigate("/my-bookings");
+     navigate("/my-bookings"); 
   };
 
   const getNext7Days = () => {
@@ -388,7 +386,7 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
   return (
     <Box sx={{ mt: { xs: "250px", sm: "150px", md: "100px" } }}>
       <Typography variant="h4" component="h1" fontWeight="bold">
-        {`${medical.length} medical centers available in ${selectedCity?.toLowerCase()}`}
+        {medical.length} Medical Centers Available in {selectedCity}
       </Typography>
 
       <Typography sx={{ mb: 3 }}>
@@ -614,12 +612,12 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
                                 : "black",
                           }}
                           onClick={() => {
-                            if (slot.available) {
-                              setSelectedSlot(slot.time);
-                              setSelectedHospital(hospital);
-                              setOpenModal(true);
-                            }
-                          }}
+      if (slot.available) {
+        setSelectedSlot(slot.time);
+        setSelectedHospital(hospital);
+        setOpenModal(true);
+      }
+    }}
                         >
                           {slot.time}
                         </Button>
@@ -646,12 +644,12 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
                             },
                           }}
                           onClick={() => {
-                            if (slot.available) {
-                              setSelectedSlot(slot.time);
-                              setSelectedHospital(hospital);
-                              setOpenModal(true);
-                            }
-                          }}
+      if (slot.available) {
+        setSelectedSlot(slot.time);
+        setSelectedHospital(hospital);
+        setOpenModal(true);
+      }
+    }}
                         >
                           {slot.time}
                         </Button>
@@ -677,13 +675,13 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
                                 ? "white"
                                 : "black",
                           }}
-                          onClick={() => {
-                            if (slot.available) {
-                              setSelectedSlot(slot.time);
-                              setSelectedHospital(hospital);
-                              setOpenModal(true);
-                            }
-                          }}
+                         onClick={() => {
+      if (slot.available) {
+        setSelectedSlot(slot.time);
+        setSelectedHospital(hospital);
+        setOpenModal(true);
+      }
+    }}
                         >
                           {slot.time}
                         </Button>
@@ -696,34 +694,43 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
           </Card>
         ))}
       </Box>
-      <Dialog open={openModal} onClose={() => setOpenModal(false)}>
-        <DialogTitle>Confirm Booking</DialogTitle>
+       <Dialog open={openModal} onClose={() => setOpenModal(false)}>
+      <DialogTitle>Confirm Booking</DialogTitle>
 
         <DialogContent>
-          <Typography>Hospital: {selectedHospital?.name?.toLowerCase()}</Typography>
+                    <Typography variant="h6" component="h3">
+Hospital: {selectedHospital?.name?.toLowerCase()}
+</Typography>
 
-          <Typography>
-            Date: {days[selectedDateIndex]?.toLocaleDateString()}
-          </Typography>
+<Typography>
+Date: {days[selectedDateIndex]?.toLocaleDateString()}
+</Typography>
 
-          <Typography>Slot: {selectedSlot}</Typography>
-          <TextField
-            fullWidth
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            sx={{ mt: 2 }}
+<Typography>
+Slot: {selectedSlot}
+</Typography>
+        <TextField
+          fullWidth
+          placeholder="Enter Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          sx={{ mt: 2 }}
           />
-        </DialogContent>
 
-        <DialogActions>
-          <Button onClick={() => setOpenModal(false)}>Cancel</Button>
+      </DialogContent>
 
-          <Button variant="contained" onClick={handleConfirmBooking}>
-            Confirm Booking
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DialogActions>
+        <Button onClick={() => setOpenModal(false)}>Cancel</Button>
+
+        <Button
+          variant="contained"
+          onClick={handleConfirmBooking}
+        >
+          Confirm Booking
+        </Button>
+      </DialogActions>
+    </Dialog>
+
     </Box>
   );
 };
