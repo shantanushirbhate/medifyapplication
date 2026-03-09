@@ -105,7 +105,7 @@ const MobileDrawerContent = ({ onClose }) => {
 
     <Box sx={{ p: 2 }}>
       <Button variant="contained" fullWidth
-          onClick={ ()=> navigate("/my-bookings")} 
+          onClick={ ()=> navigate(" /my-bookings ")} 
       >
         My Booking
       </Button>
