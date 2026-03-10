@@ -217,78 +217,38 @@ const SearchHospital = ({ searchInput, setSearchInput, onSearch }) => {
 
 const BookeddHospitalCard = ({ bookings, onDelete }) => {
   return (
-    <Box sx={{ p: { xs: 2, md: 3 } }}>
+    <Box sx={{ p: 2 }}>
       {bookings.length === 0 ? (
         <Typography>No bookings found</Typography>
       ) : (
         bookings.map((booking, index) => (
-          <Card
-            key={index}
-            sx={{
-              mb: 3,
-              display: "flex",
-              flexDirection: { xs: "column", sm: "row" },
-              alignItems: { xs: "stretch", sm: "center" },
-              p: 2,
-              gap: 2
-            }}
-          >
-            {/* Responsive Hospital Image */}
-            <CardMedia
-              
-              component="img"
-              image={Hospitalimage}
-              alt="hospital"
-              sx={{
-                marginLeft: {
-                  xs: "0.7rem",
-                  sm: "0rem",
-                  md:"0rem"// mobile full width
-                 
-                },
-                width: {
-                  xs: "40%",   // mobile full width
-                  sm: "40%",      // tablet
-                  md: "10%"       // desktop
-                },
-                height: {
-                  xs: "40%",
-                  sm: "40%",
-                  md: "10%"
-                },
-                borderRadius: 2,
-                objectFit: "cover"
-              }}
-            />
-
-            {/* Hospital Details */}
-            <CardContent sx={{ flex: 1 }}>
-              <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
-             {booking?.hospitalName}            </Typography>
-
-              <Typography sx={{ mt: 1 }}>
-                <strong>Date:</strong> {booking?.date}
+          <Card key={index} sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography variant="h6">
+                {booking?.hospitalName}
               </Typography>
 
               <Typography>
-                <strong>Time Slot:</strong> {booking?.slot}
+                Date: {booking?.date}
+              </Typography>
+
+              <Typography>
+                Time Slot: {booking?.slot}
               </Typography>
             </CardContent>
 
-            {/* Delete Icon */}
-            <IconButton
-              color="error"
-              sx={{ alignSelf: { xs: "flex-end", sm: "center" } }}
-              onClick={() => onDelete(index)}
-            >
-              <DeleteIcon />
-            </IconButton>
+            <CardActions>
+              <IconButton onClick={() => onDelete(index)}>
+                <DeleteIcon />
+              </IconButton>
+            </CardActions>
           </Card>
         ))
       )}
     </Box>
   );
 };
+
 export default function MyBookings(props) {
     const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
