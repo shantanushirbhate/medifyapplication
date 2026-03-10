@@ -352,24 +352,7 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
       ],
     },
   };
-  //   const defaultSlots = {
-  //   morning: [
-  //     { time: "10:00 AM", available: true },
-  //     { time: "10:30 AM", available: true },
-  //   ],
-  //   afternoon: [
-  //     { time: "1:00 PM", available: true },
-  //     { time: "1:30 PM", available: true },
-  //   ],
-  //   evening: [
-  //     { time: "7:00 PM", available: true },
-  //     { time: "7:30 PM", available: true },
-  //   ],
-  //   };
-
-  // for (let i = 0; i < 7; i++) {
-  //   slotData[i] = defaultSlots;
-  // }
+ 
 
   const selectedDaySlots = slotData[selectedDateIndex] || {
     morning: [],
