@@ -264,7 +264,7 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
             {/* Hospital Details */}
             <CardContent sx={{ flex: 1 }}>
               <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
-                {booking?.hospitalName.toLowerCase()}
+                {booking?.hospitalName}
               </Typography>
 
               <Typography sx={{ mt: 1 }}>
