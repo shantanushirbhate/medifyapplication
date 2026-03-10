@@ -264,15 +264,14 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
             {/* Hospital Details */}
             <CardContent sx={{ flex: 1 }}>
               <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
-                {booking?.hospitalName.toLowerCase()}
-              </Typography>
+                {booking?.hospitalName}              </Typography>
 
               <Typography sx={{ mt: 1 }}>
-                <strong>Date:</strong> {booking.date}
+                <strong>Date:</strong> {booking?.date}
               </Typography>
 
               <Typography>
-                <strong>Time Slot:</strong> {booking.slot}
+                <strong>Time Slot:</strong> {booking?.slot}
               </Typography>
             </CardContent>
 
