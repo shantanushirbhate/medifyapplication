@@ -422,8 +422,8 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
 
                 {/* Hospital Details */}
                 <Box sx={{ flex: 1 }}>
-                  <Typography variant="h6" fontWeight="bold">
-                    {hospital.name}
+                  <Typography variant="h6" component="h3" fontWeight="bold">
+                    {hospital.name.toLowerCase()}
                   </Typography>
 
                   <Typography>{hospital.address}</Typography>
