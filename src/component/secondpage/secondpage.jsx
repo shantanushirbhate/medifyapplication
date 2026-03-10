@@ -289,8 +289,7 @@ const HospitalListCard = ({  selectedCity, medical }) => {
   };
   const handleConfirmBooking = () => {
     const booking = {
-      hospitalName: selectedHospital.name,
-      city: selectedHospital.city,
+  hospitalName: selectedHospital["Hospital Name"],      city: selectedHospital.city,
       date: days[selectedDateIndex],
       slot: selectedSlot,
       email: email,
