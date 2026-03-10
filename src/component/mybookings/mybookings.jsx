@@ -224,15 +224,15 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
         bookings.map((booking, index) => (
           <Card key={index} sx={{ mb: 2 }}>
             <CardContent>
-              <Typography variant="h6" component="h3">
+              <h variant="h6" component="h3">
                 {booking?.hospitalName}
-              </Typography>
+              </h>
 
-              <Typography>
+              <Typography component="p">
                 Date: {booking?.date}
               </Typography>
 
-              <Typography>
+              <Typography component="p">
                 Time Slot: {booking?.slot}
               </Typography>
             </CardContent>
