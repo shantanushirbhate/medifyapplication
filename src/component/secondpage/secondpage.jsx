@@ -685,7 +685,7 @@ const handleConfirmBooking = () => {
 
         <DialogContent>
           <Typography variant="h5" component="h3" >
-            Hospital: {(selectedHospital?.["Hospital Name"] || selectedHospital?.name)?.toLowerCase()}me?.toLowerCase()}</Typography>
+            Hospital: {(selectedHospital?.["Hospital Name"] || selectedHospital?.name)?.toLowerCase()}me?.toLowerCase()</Typography>
 
           <Typography>
             Date: {days[selectedDateIndex]?.toLocaleDateString()}
