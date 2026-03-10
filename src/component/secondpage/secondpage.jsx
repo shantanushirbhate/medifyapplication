@@ -287,27 +287,30 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
   const handleDateClick = (index) => {
     setSelectedDateIndex(index);
   };
-  const handleConfirmBooking = () => {
-    const booking = {
-      hospitalName: selectedHospital.name,
-      city: selectedHospital.city,
-      date: days[selectedDateIndex],
-      slot: selectedSlot,
-      email: email,
-    };
-
-    const existingBookings = JSON.parse(localStorage.getItem("bookings")) || [];
-
-    existingBookings.push(booking);
-
-    localStorage.setItem("bookings", JSON.stringify(existingBookings));
-
-    setOpenModal(false);
-    setEmail("");
-    setSelectedSlot(null);
-    setSelectedHospital(null);
-    navigate("/my-bookings");
+const handleConfirmBooking = () => {
+  const booking = {
+    hospitalName:
+      selectedHospital["Hospital Name"] || selectedHospital.name,
+    city: selectedHospital.city,
+    date: days[selectedDateIndex].toLocaleDateString("en-IN"),
+    slot: selectedSlot,
+    email: email,
   };
+
+  const existingBookings =
+    JSON.parse(localStorage.getItem("bookings")) || [];
+
+  existingBookings.push(booking);
+
+  localStorage.setItem("bookings", JSON.stringify(existingBookings));
+
+  setOpenModal(false);
+  setEmail("");
+  setSelectedSlot(null);
+  setSelectedHospital(null);
+
+  navigate("/my-bookings");
+};
 
   const getNext7Days = () => {
     const days = [];
@@ -406,7 +409,7 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
                 {/* Hospital Details */}
                 <Box sx={{ flex: 1 }}>
                   <Typography variant="h6" component="h3" fontWeight="bold">
-                    {hospital.name.toLowerCase()}
+                  {hospital["Hospital Name"]?.toLowerCase() || hospital.name?.toLowerCase()}
                   </Typography>
 
                   <Typography>{hospital.address}</Typography>
@@ -681,7 +684,8 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
         <DialogTitle>Confirm Booking</DialogTitle>
 
         <DialogContent>
-          <Typography variant="h5" component="h3" >Hospital: {selectedHospital?.name?.toLowerCase()}</Typography>
+          <Typography variant="h5" component="h3" >
+            Hospital: {(selectedHospital?.["Hospital Name"] || selectedHospital?.name)?.toLowerCase()}me?.toLowerCase()}</Typography>
 
           <Typography>
             Date: {days[selectedDateIndex]?.toLocaleDateString()}
