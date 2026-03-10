@@ -268,7 +268,7 @@ const SearchListContainer = ({
   );
 };
 
-const HospitalListCard = ({  selectedCity, medical }) => {
+const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
   const [openIndex, setOpenIndex] = useState(null);
   const [selectedDateIndex, setSelectedDateIndex] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -289,7 +289,7 @@ const HospitalListCard = ({  selectedCity, medical }) => {
   };
   const handleConfirmBooking = () => {
     const booking = {
-      hospitalName: selectedHospital["Hospital Name"].toLowerCase(),
+      hospitalName: selectedHospital.name,
       city: selectedHospital.city,
       date: days[selectedDateIndex],
       slot: selectedSlot,
@@ -755,11 +755,12 @@ export default function SearchListPage(props) {
 
   /* ================= FIRST LOAD DATA ================= */
 
-useEffect(() => {
-  if (selectedState && selectedCity) {
-    fetchMedicalCenter();
-  }
-}, );
+  useEffect(() => {
+    if (selectedState && selectedCity) {
+      fetchMedicalCenter();
+    }
+  }, []);
+
   /* FETCH STATES */
 
   useEffect(() => {
