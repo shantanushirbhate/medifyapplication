@@ -268,7 +268,7 @@ const SearchListContainer = ({
   );
 };
 
-const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
+const HospitalListCard = ({  selectedCity, medical }) => {
   const [openIndex, setOpenIndex] = useState(null);
   const [selectedDateIndex, setSelectedDateIndex] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -755,12 +755,11 @@ export default function SearchListPage(props) {
 
   /* ================= FIRST LOAD DATA ================= */
 
-  useEffect(() => {
-    if (selectedState && selectedCity) {
-      fetchMedicalCenter();
-    }
-  }, []);
-
+useEffect(() => {
+  if (selectedState && selectedCity) {
+    fetchMedicalCenter();
+  }
+}, );
   /* FETCH STATES */
 
   useEffect(() => {

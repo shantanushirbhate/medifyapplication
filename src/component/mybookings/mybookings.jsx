@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import PropTypes from "prop-types";
 // import { FormControl, Select, MenuItem, Card, CardContent } from "@mui/material";
 // import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -264,7 +264,7 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
             {/* Hospital Details */}
             <CardContent sx={{ flex: 1 }}>
               <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
-                {booking?.hospitalName}
+                {booking?.hospitalName?.toLowerCase()}
               </Typography>
 
               <Typography sx={{ mt: 1 }}>
@@ -294,7 +294,7 @@ export default function MyBookings(props) {
     const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   
-   const [bookings, setBookings] = useState([]);
+  //  const [bookings, setBookings] = useState([]);
   const [search, setSearch] = useState("");
 
   const [searchInput, setSearchInput] = useState("");
@@ -304,20 +304,20 @@ export default function MyBookings(props) {
   };
 
 
-useEffect(() => {
+const [bookings, setBookings] = useState(() => {
   try {
-    const storedBookings = JSON.parse(localStorage.getItem("bookings"));
+    const storedBookings = JSON.parse(localStorage.getItem("bookings") || "[]");
 
     if (Array.isArray(storedBookings)) {
-      setBookings(storedBookings);
-    } else {
-      setBookings([]);
+      return storedBookings;
     }
+
+    return [];
   } catch (error) {
-    console.log(" Error parsing bookings from localstorage:",error)
-    setBookings([]);
+    console.log("Error parsing bookings from localStorage:", error);
+    return [];
   }
-}, []);
+});
 
   
 const filteredBookings = (bookings || []).filter((booking) => {
