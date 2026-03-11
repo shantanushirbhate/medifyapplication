@@ -288,18 +288,22 @@ const HospitalListCard = ({ selectedState, selectedCity, medical }) => {
     setSelectedDateIndex(index);
   };
 const handleConfirmBooking = () => {
-  const booking = {
+  const bookings = {
     hospitalName: selectedHospital["Hospital Name"] || selectedHospital.name,
     city: selectedHospital.city,
+    state:selectedState.state,
     date: days[selectedDateIndex].toLocaleDateString("en-IN"),
     slot: selectedSlot,
     email: email,
+    type: selectedHospital.type,
+    address: selectedHospital.address,
+    rating: selectedHospital.rating
   };
 
   const existingBookings =
     JSON.parse(localStorage.getItem("bookings")) || [];
 
-  existingBookings.push(booking);
+  existingBookings.push(bookings);
 
   localStorage.setItem("bookings", JSON.stringify(existingBookings));
 
@@ -684,7 +688,7 @@ const handleConfirmBooking = () => {
 
         <DialogContent>
           <Typography variant="h5" component="h3" >
-            Hospital: {(selectedHospital?.["Hospital Name"] || selectedHospital?.name)?.toLowerCase()}me?.toLowerCase()</Typography>
+            Hospital: {(selectedHospital?.["Hospital Name"] || selectedHospital?.name)?.toLowerCase()}</Typography>
 
           <Typography>
             Date: {days[selectedDateIndex]?.toLocaleDateString()}
@@ -748,6 +752,7 @@ export default function SearchListPage(props) {
         zip: item["ZIP Code"],
         state: item["State"],
         rating: item["Hospital overall rating"],
+        type:item["Hospital Type"]
       }));
 
       setMedical(hospitals);
