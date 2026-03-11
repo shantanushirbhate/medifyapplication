@@ -262,10 +262,9 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
             />
 
             {/* Hospital Details */}
-            <CardContent sx={{ flex: 1 }}>
-              <CardContent sx={{ flex: 1 }}>
+   <CardContent sx={{ flex: 1 }}>
   <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
-    {booking?.hospitalName}
+    {booking?.hospitalName || booking?.["Hospital Name"]}
   </Typography>
 
   <Typography sx={{ mt: 1 }}>
@@ -273,26 +272,30 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
   </Typography>
 
   <Typography sx={{ mt: 1 }}>
-    <strong>City:</strong> {booking?.city} {booking?.state}-{booking?.zip}
+    <strong>City:</strong> {booking?.city || booking?.City}
+  </Typography>
+
+  {/* <Typography sx={{ mt: 1 }}>
+    <strong>State:</strong> {booking?.state || booking?.State}
+  </Typography> */}
+
+  <Typography sx={{ mt: 1 }}>
+    <strong>Hospital Type:</strong> {booking?.type || booking?.["Hospital Type"]}
   </Typography>
 
   <Typography sx={{ mt: 1 }}>
-    <strong>Hospital Type:</strong> {booking?.type}
+    <strong>Date:</strong> {booking?.date || booking?.bookingDate}
   </Typography>
 
   <Typography sx={{ mt: 1 }}>
-    <strong>Date:</strong> {booking?.date}
+    <strong>Time Slot:</strong> {booking?.slot || booking?.bookingTime}
   </Typography>
 
   <Typography sx={{ mt: 1 }}>
-    <strong>Time Slot:</strong> {booking?.slot}
-  </Typography>
-
-  <Typography sx={{ mt: 1 }}>
-    <strong>Rating:</strong> {booking?.rating} 
+    <strong>Rating:</strong>{" "}
+    {booking?.rating || booking?.["Hospital overall rating"]}
   </Typography>
 </CardContent>
-            </CardContent>
 
             {/* Delete Icon */}
             <IconButton
@@ -338,11 +341,11 @@ const [bookings, setBookings] = useState(() => {
 });
 
   
-const filteredBookings = (bookings || []).filter((booking) => {
-  const hospitalName = booking?.hospitalName || "";
-  const searchTerm = search || "";
+const filteredBookings = bookings.filter((booking) => {
+  const hospitalName =
+    booking?.hospitalName || booking?.["Hospital Name"] || "";
 
-  return hospitalName.toLowerCase().includes(searchTerm.toLowerCase());
+  return hospitalName.toLowerCase().includes(search.toLowerCase());
 });
 
   const handleDeleteBooking = (indexToDelete) => {
