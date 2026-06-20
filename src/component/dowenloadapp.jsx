@@ -43,7 +43,7 @@ export default function DownloadApp() {
           sx={{
             width: { xs: "40%" ,sm: "50%" ,md: "55%" },
             marginTop:{xs:"20rem", sm:"10px", md:"10px"},
-            height: { xs: "20rem", sm: "70px", md: "45rem" },
+            height: { xs: "20rem", sm: "40rem", md: "45rem" },
         
           }}
         ></Box>

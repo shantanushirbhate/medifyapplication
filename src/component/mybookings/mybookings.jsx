@@ -268,22 +268,6 @@ const BookeddHospitalCard = ({ bookings, onDelete }) => {
   </Typography>
 
   <Typography sx={{ mt: 1 }}>
-    <strong>Address:</strong> {booking?.address}
-  </Typography>
-
-  <Typography sx={{ mt: 1 }}>
-    <strong>City:</strong> {booking?.city || booking?.City}
-  </Typography>
-
-  {/* <Typography sx={{ mt: 1 }}>
-    <strong>State:</strong> {booking?.state || booking?.State}
-  </Typography> */}
-
-  <Typography sx={{ mt: 1 }}>
-    <strong>Hospital Type:</strong> {booking?.type || booking?.["Hospital Type"]}
-  </Typography>
-
-  <Typography sx={{ mt: 1 }}>
     <strong>Date:</strong> {booking?.date || booking?.bookingDate}
   </Typography>
 

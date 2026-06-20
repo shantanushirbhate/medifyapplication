@@ -14,6 +14,7 @@ import img2 from "../assets/Capsule.png";
 import img3 from "../assets/Doctor.png";
 import img4 from "../assets/Drugstore.png";
 import img5 from "../assets/Hospital.png";
+import img6 from "../assets/Hospital.png";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -59,6 +60,7 @@ const Images = [
   { id: 3, src: img3, title: "Doctor" },
   { id: 4, src: img4, title: "Drugstore" },
   { id: 5, src: img5, title: "Hospital" },
+  { id: 6, src: img6, title: "OPD" },
 ];
 
 /* =======================
@@ -390,12 +392,12 @@ const HeroSection = ({ states }) => {
                 key={item.id}
                 sx={{
                   width: {
-                    xs: "14%", // 2 per row mobile
+                    xs: "20%", // 2 per row mobile
                     sm: "28%", // 3 per row tablet
-                    md: "15%", // 5 per row desktop
+                    md: "10%", // 5 per row desktop
                   },
                   textAlign: "center",
-                  p: { xs: 1.6, sm: 2 },
+                  py: { xs: 1.6, sm: 2, md:2 },
                   borderRadius: 2,
                   transition: "0.3s",
                   cursor: "pointer",
